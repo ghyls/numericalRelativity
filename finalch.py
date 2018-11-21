@@ -199,27 +199,31 @@ class Ui_TabWidget(object):
         _translate = QtCore.QCoreApplication.translate
         TabWidget.setWindowTitle(_translate("TabWidget", "Christoffel Symbols Calculator"))
 
-        self.ds1.setText(_translate("TabWidget", "r"))
-        self.ds2.setText(_translate("TabWidget", "th"))
+        self.ds1.setText(_translate("TabWidget", "t"))
+        self.ds2.setText(_translate("TabWidget", "r"))
+        self.ds3.setText(_translate("TabWidget", "th"))
+        self.ds4.setText(_translate("TabWidget", "fi"))
+
+
         
         self.label_3.setText(_translate("TabWidget", "Metric (start from the up-left corner):"))
         self.label_2.setText(_translate("TabWidget", "Order of the variables in the interval:"))
         self.label_4.setText(_translate("TabWidget", "Note: leave extra dimensions blank"))
 
-        self.m00.setText(_translate("TabWidget", "1"))
-        self.m01.setText(_translate("TabWidget", "0"))
-        self.m10.setText(_translate("TabWidget", "0"))
-        self.m11.setText(_translate("TabWidget", "r**2"))
+        self.m00.setText(_translate("TabWidget", "-(1-2*G*M/r)"))
+        self.m11.setText(_translate("TabWidget", "1/(1-2*G*M/r)"))
+        self.m22.setText(_translate("TabWidget", "r**2"))
+        self.m33.setText(_translate("TabWidget", "r**2*sin(th)**2"))
 
         self.label_5.setText(_translate("TabWidget", "Note: You can use the following symbolic constants: G, M, R, C1, C2, C3"))
         TabWidget.setTabText(TabWidget.indexOf(self.tab), _translate("TabWidget", "Inputs"))
         self.cha.setText(_translate("TabWidget", "r"))
-        self.chb.setText(_translate("TabWidget", "r"))
-        self.chc.setText(_translate("TabWidget", "r"))
+        self.chb.setText(_translate("TabWidget", "fi"))
+        self.chc.setText(_translate("TabWidget", "fi"))
         self.label.setText(_translate("TabWidget", "Γ"))
         self.pushButton.setText(_translate("TabWidget", "calculate"))
         self.label_6.setText(_translate("TabWidget", "Result:"))
-        self.sol.setText(_translate("TabWidget", "[sol]"))
+        self.sol.setText(_translate("TabWidget", ""))
         TabWidget.setTabText(TabWidget.indexOf(self.tab1), _translate("TabWidget", "Calculations"))
 
     def calculate(self):

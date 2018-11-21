@@ -2,6 +2,10 @@ import sympy as sp
 
 def christoffel(ds, g_mn, abc):
 
+
+    #calcula \Gamma_{ab}^c
+
+
     #Constantes que podrían aparecer en la métrica
     G, M, R, C1, C2, C3 = sp.symbols('G M R C1 C2 C3')
     
@@ -55,43 +59,3 @@ def christoffel(ds, g_mn, abc):
         chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ordenSt[ai]) + sp.diff(gabD[di][ai], ordenSt[bi]) - sp.diff(gabD[ai][bi], ordenSt[di]))
         
     return(chrst)
-'''
-r, th = sp.symbols('r th') 
-
-orden = [r, th] #en qué orden escribes el intervalo (ej ds² = dr² + r²dTh² o \
-                #                                       ds² = dTh² + r²dr²)
-
-
-#la métrica con los íncices a b abajo
-gabD = sp.Matrix([[1, 0], [0, r**2]])
-
-#y con los índices arriba, 
-gabU = gabD.inv()
-
-gabD = gabD.tolist()
-gabU = gabU.tolist()
-
-#a = sp.diff(gabU[0][0], r)
-
-#Voy a calcular el símbolo \Gamma_{ab}^c
-a = r
-b = r
-c = r
-
-
-def crist(a, b, c, orden):
-    ai = orden.index(a)
-    bi = orden.index(b)
-    ci = orden.index(c)
-
-    chrst = 0
-
-    for di in range(len(gabD)):
-        chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ) + sp.diff(gabD[di][ai], b) - sp.diff(gabD[ai][bi], orden[di]))
- 
-    return chrst
-
-res = crist(a, b, c, orden)    
-print(res)
-'''
-

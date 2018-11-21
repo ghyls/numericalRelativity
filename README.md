@@ -1,1 +1,1 @@
-# numericalRelativity
+# Numerical Relativity
