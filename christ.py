@@ -1,10 +1,10 @@
 import sympy as sp
 
-def christoffel(ds, g_mn, abc):
-
-
-    #calcula \Gamma_{ab}^c
-
+def christoffel(ds, g_mn, abc = [], ABC = []):
+    # calcula \Gamma_{ab}^c. 
+    
+    # ABC contiene múltiples tuplas abc. Se usa para calcular varios símbolos
+    # en una sola llamada.
 
     #Constantes que podrían aparecer en la métrica
     G, M, R, C1, C2, C3 = sp.symbols('G M R C1 C2 C3')
@@ -41,21 +41,51 @@ def christoffel(ds, g_mn, abc):
 
     #a = sp.diff(gabU[0][0], r)
 
-    #Voy a calcular el símbolo \Gamma_{ab}^c
-    a = abc[0]
-    b = abc[1]
-    c = abc[2]
 
-    #print(a, type(a))
-    #print(b, type(b))
-    #print(type(ordenSt[0]))
-    ai = ordenSt.index(a)
-    bi = ordenSt.index(b)
-    ci = ordenSt.index(c)
+    if ABC == [] and abc != []:
+        #Vamos a calcular solo el símbolo \Gamma_{ab}^c
+        a = abc[0]
+        b = abc[1]
+        c = abc[2]
 
-    chrst = 0
+        ai = ordenSt.index(a)
+        bi = ordenSt.index(b)
+        ci = ordenSt.index(c)
 
-    for di in range(len(gabD)):
-        chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ordenSt[ai]) + sp.diff(gabD[di][ai], ordenSt[bi]) - sp.diff(gabD[ai][bi], ordenSt[di]))
+        chrst = 0
         
-    return(chrst)
+        for di in range(len(gabD)):
+            chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ordenSt[ai]) + sp.diff(gabD[di][ai], ordenSt[bi]) - sp.diff(gabD[ai][bi], ordenSt[di]))
+        
+        return(chrst)
+    
+
+    elif ABC != [] and abc == []:
+
+        CHRIST = [] 
+
+        for elem in ABC:
+            a = elem[0]
+            b = elem[1]
+            c = elem[2]  
+
+            ai = ordenSt.index(a)
+            bi = ordenSt.index(b)
+            ci = ordenSt.index(c)
+            chrst = 0
+            for di in range(len(gabD)):
+                chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ordenSt[ai]) + sp.diff(gabD[di][ai], ordenSt[bi]) - sp.diff(gabD[ai][bi], ordenSt[di]))
+            CHRIST.append(chrst)
+        
+        return CHRIST
+    else: print("wrong call! either abc or ABC must be empty")
+
+    
+
+
+'''
+abc = ["t", "r", "t"]
+ds = ['t', 'r', 'th', 'fi']
+g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
+print(christoffel(ds, g_mn, abc, 1))
+'''
