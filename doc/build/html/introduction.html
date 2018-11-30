@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="2. Tutorials" href="tutorial/index.html" />
-    <link rel="prev" title="AnalysisPAF" href="index.html" /> 
+    <link rel="prev" title="Numerical Relativity" href="index.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -152,16 +152,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="topic" id="introduction">
-<p class="topic-title first">Abstract</p>
-<p>…</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Esto está sin empezar</p>
-</div>
+  <p id="introduction">This documentation was written by Mario González and Diego Valledor in 2019.
+The files referred in this document are stored in our Github <a class="reference external" href="https://github.com/mariohyls/numericalRelativity">repository</a>.</p>
 <div class="section" id="numerical-relativity">
 <h1>1. Numerical Relativity<a class="headerlink" href="#numerical-relativity" title="Permalink to this headline">¶</a></h1>
+<p>On this guide, we will cover the basic usage of every tool we have created.
+They essentially consist in various scripts in C++, Fortran and Python, most of
+them merged under an interfaced application built with PyQt5.</p>
+<p>Those files, and their basic usage are:</p>
+<blockquote>
+<div><p><strong>riem.py</strong>: calculates symbollicaly any component of the Riemann tensor from
+any metric up to 4 dimensions</p>
+<p><strong>christ.py</strong> calculates symbollicaly any Cristoffel symbol, also from a
+metric up to 4D.</p>
+<p><strong>app.py</strong> written using PyQt5 libraries, builds an interface for the two
+previous applications.</p>
+<p><strong>newtonMulti.py</strong>: Computes, for a given number of cosmological objects, a 2D
+simulation uisng a newtonian potential (non relativistic). It considers the
+changes in the mass and in the angular momentum in each collision, and
+builds the trayectory for all the particles using the potential created for
+the rest. Prints the result in a file called by default “data.txt”</p>
+<p><strong>einsteinMulti.cpp</strong>: Does the same as <em>newtonMulti</em>, but an option is added
+to perform the calculations with Swartchild potential, instead of newton’s
+one. It is also much more optimized in terms of performance.</p>
+<p><strong>mercury.py</strong>: plots the trayectory of mercury around the Sun, using both a
+newtonian potential and a version with a small relativistic correction. It
+uses only standard python libraries like <em>matplotlib</em>.</p>
+</div></blockquote>
 </div>
 
 
@@ -175,7 +192,7 @@
         <a href="tutorial/index.html" class="btn btn-neutral float-right" title="2. Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="AnalysisPAF" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Numerical Relativity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

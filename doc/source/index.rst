@@ -1,6 +1,6 @@
 
-AnalysisPAF
-===========
+Numerical Relativity
+===================
 
 .. toctree::
    :maxdepth: 3

@@ -16,15 +16,13 @@ class Planet:
         self.xtray = []
         self.ytray = []
 
-sun = Planet(0, 0, 1.989e30)
 sun = Planet(0, 0, 50)
 
 
-earth = Planet(150e6, 0, 5.972e24)
-earth = Planet(15, 0, 20)
+earth = Planet(10, 0, 5)
 
 earth.vx = 1
-earth.vy = 2
+earth.vy = 1
 
 def computeDistance(pl1, pl2):
     d = ((pl2.y-pl1.y)**2 + (pl2.x-pl1.x)**2)**0.5
@@ -48,7 +46,7 @@ def updateCoord(pl1, pl2, r):
     #print(pl1.vx, r)
 
 t = t0
-while t < 200:
+while t < 50:
     r = computeDistance(earth, sun)
     if r < rmin: break
     earth.xtray.append(earth.x)

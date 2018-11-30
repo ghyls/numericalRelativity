@@ -84,8 +84,8 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
 
 
 '''
-abc = ["t", "r", "t"]
+abc = ["r", "t", "t"]
 ds = ['t', 'r', 'th', 'fi']
 g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
-print(christoffel(ds, g_mn, abc, 1))
+print(christoffel(ds, g_mn, abc))
 '''
