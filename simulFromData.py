@@ -20,7 +20,7 @@ from pyqtgraph import ScatterPlotItem
 class MyWidget(pg.GraphicsWindow):
     
     ind = 0 
-    dataFile = "data.txt"
+    dataFile = "temp.txt"
     def readTimeStep(self, index):
         with open(self.dataFile, "r") as f:
             line = next(islice(f, index, index+1))
@@ -40,13 +40,13 @@ class MyWidget(pg.GraphicsWindow):
         self.timer.start()
         self.timer.timeout.connect(self.onNewData)
 
-        self.plotItem = self.addPlot(title="vamos que esta es la buena")
+        self.plotItem = self.addPlot(title="TheUniverse")
 
 
         self.plotItem.setXRange(-10, 10)
         self.plotItem.setYRange(-10, 10)
 
-        self.plotDataItem = self.plotItem.plot([], pen=None, 
+        self.plotDataItem = self.plotItem.plot([], pen=None, size=10,
             symbolBrush=(255,0,0), symbolSize=50, symbolPen=None)
         self.scatter = self.plotItem.plot(size=10, pen=None, symbolBrush=(255,0,0), symbolSize=5, symbolPen=None)  #brush=pg.mkBrush(255, 255, 255, 120
 
