@@ -1,6 +1,10 @@
 import sympy as sp
 
 def christoffel(ds, g_mn, abc = [], ABC = []):
+
+    # ds contiene el orden de las variables en el intervalo
+    # g_mn es la métrica, en forma de 2D tupla
+
     # calcula \Gamma_{ab}^c. 
     
     # ABC contiene múltiples tuplas abc. Se usa para calcular varios símbolos
@@ -18,7 +22,6 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
             exec("var"+str(i)+"=sp.symbols('"+e+"')")
             exec("orden.append(var"+str(i)+")")
 
-    #print(orden)
     ordenSt = [str(k) for k in orden]
     d = len(ordenSt)
 
@@ -27,19 +30,15 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
     for i, row in enumerate(g_mn):
         for j, elem in enumerate(row):
             if i >= d or j >= d: continue
-            #print(i, j)
             if elem != '': gabD[i,j] = elem
             else: gabD[i,j] = 0
-    #print(gabD)
 
     #y con los índices arriba, 
     gabU = gabD.inv()
-    #print(gabU)
 
     gabD = gabD.tolist()
     gabU = gabU.tolist()
 
-    #a = sp.diff(gabU[0][0], r)
 
 
     if ABC == [] and abc != []:
@@ -61,7 +60,7 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
     
 
     elif ABC != [] and abc == []:
-
+        #vamos a calcular varios símbolos de una sola vez
         CHRIST = [] 
 
         for elem in ABC:
