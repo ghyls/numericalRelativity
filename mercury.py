@@ -28,7 +28,7 @@ Sx = [0]    #coordenadas del sol
 Sy = [0]
 
 
-# Definition of the time step
+
 dt = 2 * vMR0 / c_a / 20
 
 def module(vec):
@@ -55,18 +55,13 @@ def updateCoord(Rold, Vold, alpha=0, beta=0):
 
 
 t = 0.0
-alpha = 0
-beta = 3e5
+alpha = 5e6
+beta = 0
 distPrev = 0
 dist = 0
 r0 = dt * 10
-# Execute the loop as long as t < 2*TM
 while t < 2*TMR:
-    # Set the frame rate (you can choose a higher rate to accelerate the program)
-    #rate(100)
-    # Update the drawn trajectory with the current position
-    #M.trajectory.append(pos=M.pos)
-    # Update velocity and position
+
     MRelR, MRelV = updateCoord(MRelR,  MRelV , alpha, beta)
     Mr, Mv = updateCoord(Mr,  Mv)
     
@@ -78,30 +73,20 @@ while t < 2*TMR:
     
     distRel = computeDistance([Sx, Sy], [MRelX[-1], MRelY[-1]])
     distNRel = computeDistance([Sx, Sy], [Mx[-1], My[-1]])
-    #if distRel < r0 or distNRel < r0:
-    #    break
-    '''
-    print(dist, distPrev)
-    distPrev = dist
-    acerc = False
-    if dist < distPrev: #si la distancia está bajando (se acerca al perih)
-        acerc = True
-        #print("se acerca")
 
-    if dist > distPrev: print("se aleja!")
-
-    if acerc == True and dist > distPrev:
-        print(np.arccos(Mx[-1]/dist))
-
-    #print(Mr[0], Mr[1])
-    '''
-    # Advance time by one step
     t = t + dt
 
 
 import matplotlib.pyplot as plt
-plt.plot(MRelX, MRelY, '.')
-plt.plot(Mx, My, '.')
+from matplotlib import cm
+
+
+col = np.linspace(0, 1, num=len(MRelX))
+print(len(col))
+#plt.plot(MRelX, MRelY, '.', markersize = 1, c=MRelY)
+plt.scatter(MRelX, MRelY, c=col, s=2)
+
+#plt.plot(Mx, My, '.', markersize = 1)
 plt.axis("equal")
 plt.scatter(Sx[0], Sy[0])
 plt.show()
