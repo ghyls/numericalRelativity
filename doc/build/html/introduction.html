@@ -157,28 +157,34 @@ The files referred in this document are stored in our Github <a class="reference
 <div class="section" id="numerical-relativity">
 <h1>1. Numerical Relativity<a class="headerlink" href="#numerical-relativity" title="Permalink to this headline">¶</a></h1>
 <p>On this guide, we will cover the basic usage of every tool we have created.
-They essentially consist in various scripts in C++, Fortran and Python, most of
+They essentially consist of various scripts in C++, Fortran and Python, most of
 them merged under an interfaced application built with PyQt5.</p>
 <p>Those files, and their basic usage are:</p>
 <blockquote>
-<div><p><strong>riem.py</strong>: calculates symbollicaly any component of the Riemann tensor from
+<div><p><strong>riem.py</strong>: calculates symbolically any component of the Riemann tensor from
 any metric up to 4 dimensions</p>
-<p><strong>christ.py</strong> calculates symbollicaly any Cristoffel symbol, also from a
+<p><strong>christ.py</strong> calculates symbolically any Christoffel symbol, also from a
 metric up to 4D.</p>
-<p><strong>app.py</strong> written using PyQt5 libraries, builds an interface for the two
-previous applications.</p>
-<p><strong>newtonMulti.py</strong>: Computes, for a given number of cosmological objects, a 2D
-simulation uisng a newtonian potential (non relativistic). It considers the
-changes in the mass and in the angular momentum in each collision, and
-builds the trayectory for all the particles using the potential created for
+<p><strong>appFinal.py</strong> written using PyQt5 libraries builds an interface for the
+two previous applications.</p>
+<p><strong>newtonMulti.py</strong>: Computes, for a given number of cosmological objects, a
+2D simulation using a Newtonian potential (non-relativistic). It considers
+the changes in the mass and in the angular momentum in each collision, and
+builds the trajectory for all the particles using the potential created for
 the rest. Prints the result in a file called by default “data.txt”</p>
-<p><strong>einsteinMulti.cpp</strong>: Does the same as <em>newtonMulti</em>, but an option is added
-to perform the calculations with Swartchild potential, instead of newton’s
-one. It is also much more optimized in terms of performance.</p>
-<p><strong>mercury.py</strong>: plots the trayectory of mercury around the Sun, using both a
-newtonian potential and a version with a small relativistic correction. It
+<p><strong>einsteinMulti.cpp</strong>: Does the same as <em>newtonMulti</em>, but an option is
+added to perform the calculations with Swartchild potential, instead of
+newton’s one. It is also much more optimized in terms of performance.</p>
+<p><strong>mercury.py</strong>: plots the trajectory of mercury around the Sun, using both a
+Newtonian potential and a version with a small relativistic correction. It
 uses only standard python libraries like <em>matplotlib</em>.</p>
+<p><strong>simulFromData.py</strong>: It reads the data written by newtonMulti.py or
+einsteinMulti.cpp and plots it in an efficient way, by using pyqtgraph.</p>
+<p><strong>plotGraphs.py</strong>: It reads the data written by the Fortran scripts, splits
+it regarding to the timesteps and plots it making a simple animation.</p>
 </div></blockquote>
+<p>In the following sections, we will cover the basic usage of these files, also
+providing some examples and discussing some computational issues.</p>
 </div>
 
 
