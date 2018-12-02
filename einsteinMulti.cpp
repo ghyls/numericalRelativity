@@ -10,12 +10,14 @@ const float G = 1;
 const float dt = 0.0001;
 const float tmax = 10;
 const float t0 = 0;
-const int nObj = 50;
+const int nObj = 2000;
 
-const bool relat = true;
+const bool relat = false;
+const bool loop = false;
 
 
- 
+//nObj  150
+
 
 
 float computeDistance(double x1, double y1, double x2, double y2)
@@ -51,14 +53,14 @@ void updateCoord(std::array<float, nObj> &rMin, std::array<float, nObj> &allM,
                     float Mi = allM[i];
                     float Mj = allM[j];
                     std::cout << "==============================" << std::endl;
-                    std::cout << "Un choque, " << i << ' ' << j << std::endl;
-                    std::cout << allX[i] << ' ' << allY[i] << std::endl;
-                    std::cout << allX[j] << ' ' << allY[j] << std::endl;
+                    std::cout << "boom!, " << i << ' ' << j << std::endl;
+                    //std::cout << allX[i] << ' ' << allY[i] << std::endl;
+                    //std::cout << allX[j] << ' ' << allY[j] << std::endl;
 
-                    //allVx[i] += allVx[j];
-                    //allVy[i] += allVy[j];
                     allVx[i] = (Mi*allVx[i] + Mj*allVx[j])/(Mi + Mj);
                     allVy[i] = (Mi*allVy[i] + Mj*allVy[j])/(Mi + Mj);
+                    allX[i] = (Mi*allX[i] + Mj*allX[j])/(Mi + Mj);
+                    allY[i] = (Mi*allY[i] + Mj*allY[j])/(Mi + Mj);
                     allM[i] += allM[j];
 
                     status[j] = false;
@@ -107,16 +109,18 @@ void updateCoord(std::array<float, nObj> &rMin, std::array<float, nObj> &allM,
                     allY[j] = (allY[j] + allVy[j] * dt);
 
                 }
-
-                int lim=10;
-                if (allX[i] > lim){allX[i] -= 2*lim;}
-                else if (allX[i] < -lim){allX[i] += 2*lim;}
-                if (allY[i] > lim){allY[i] -= 2*lim;}
-                else if (allY[i] < -lim){allY[i] += 2*lim;}
-                if (allX[j] > lim){allX[j] -= 2*lim;}
-                else if (allX[j] < -lim){allX[j] += 2*lim;}
-                if (allY[j] > lim){allY[j] -= 2*lim;}
-                else if (allY[j] < -lim){allY[j] += 2*lim;}
+                if (loop==true)
+                {   
+                    int lim=10;
+                    if (allX[i] > lim){allX[i] -= 2*lim;}
+                    else if (allX[i] < -lim){allX[i] += 2*lim;}
+                    if (allY[i] > lim){allY[i] -= 2*lim;}
+                    else if (allY[i] < -lim){allY[i] += 2*lim;}
+                    if (allX[j] > lim){allX[j] -= 2*lim;}
+                    else if (allX[j] < -lim){allX[j] += 2*lim;}
+                    if (allY[j] > lim){allY[j] -= 2*lim;}
+                    else if (allY[j] < -lim){allY[j] += 2*lim;}
+                }
             }
         }
     }
@@ -130,7 +134,6 @@ void updateCoord(std::array<float, nObj> &rMin, std::array<float, nObj> &allM,
 int main()
 {
     clock_t tStart = clock();
-
     int num_timesteps = (tmax-t0)/dt;
 
     //inicialize main arrays
@@ -148,28 +151,35 @@ int main()
         allX[i] = (double) rand()/RAND_MAX * 20 - 10;
         allY[i] = (double) rand()/RAND_MAX * 20 - 10;
 
-        allVx[i] = (double) (rand()/RAND_MAX - 0.5)*0.1;
-        allVy[i] = (double) (rand()/RAND_MAX - 0.5)*0.1;
+        allVx[i] = (double) rand()/RAND_MAX - 0.5;
+        allVy[i] = (double) rand()/RAND_MAX - 0.5;
+
+        //orbital conditions
+        float scale=10;
+
+        //allVx[i] = (double) -allY[i]/scale;
+        //allVy[i] = (double) allX[i]/scale;
 
         //allM[i] = (double) rand()/RAND_MAX * 20;
         allM[i] = 3;
+        
         status[i] = true;
     }
 
-    /*allM = {3, 3, 3}; 
-    allX = {1, 10, 15};
-    allY = {1, 0, 5};
-
-
-    allVx = {0, -1, -1};
-    allVy = {0, 0, 0};*/
+    //allX[0] = 0;
+    //allY[0] = 0;
+    //allVx[0] = 0;
+    //allVy[0] = 0;
+    //allM[0] = 200;
 
 
 
     // main loop
     std::ofstream file;
-    file.open("data.txt");
-
+    file.open("temp.txt");
+    //c -> central particle
+    //l -> boundary restrictions
+    
 
     std::array<double, nObj> xFinalTemp;
     std::array<double, nObj> yFinalTemp;
