@@ -28,7 +28,6 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.3. NOTAS" href="notes.html" />
     <link rel="prev" title="2. Tutorials" href="index.html" /> 
 
   
@@ -105,7 +104,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#simulfromdata-py">2.2.6. simulFromData.py</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="notes.html">2.3. NOTAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-gravitational-pulse-in-a-2-dimensional-simplified-space-time-t-x">2.3. A gravitational pulse in a 2-dimensional simplified space-time(t,x)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules">2.3.1. Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subroutines">2.3.2. <strong>Subroutines</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-guide">2.3.3. <strong>Installation guide</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -330,7 +334,7 @@ over).</p>
 <p><code class="docutils literal notranslate"><span class="pre">nObj</span></code>: The number of objects to simulate.</p>
 <p><code class="docutils literal notranslate"><span class="pre">dt</span></code>: the timestep. This variable is quite important, and is directly
 related to the accuracy of the code.</p>
-<p>In some cases, especially when isung the Schwarzschild potential, one has to
+<p>In some cases, especially when using the Schwarzschild potential, one has to
 take care of this variable, in order to prevent situations like the one
 in the following figure:</p>
 </div></blockquote>
@@ -385,6 +389,110 @@ performance. This file is also implemented in the widget.</p>
 </div>
 </div>
 </div>
+<div class="section" id="a-gravitational-pulse-in-a-2-dimensional-simplified-space-time-t-x">
+<h1>2.3. A gravitational pulse in a 2-dimensional simplified space-time(t,x)<a class="headerlink" href="#a-gravitational-pulse-in-a-2-dimensional-simplified-space-time-t-x" title="Permalink to this headline">¶</a></h1>
+<p>The program “gravitational-wave” aims to perform a numerical calculation of the
+intensity of the field induced by a 1-dimensional gravitational wave using the
+<em>3+1 formalism</em> of the General Relativity.</p>
+<p>The <em>3+1 formalism</em> is based on the decomposition of space-time into
+3-dimensional hyper-surfaces with <em>t = constant</em>. This can be seen as a
+foliation, we can superimpose infinite hyper-planes (3-dimensional) to generate
+a complete 4-dimensional space. It is only necessary that the <em>leaves</em> do not
+intersect each other. A space that meets this condition is said to be a
+<em>globally hyperbolic space</em>, and implies that there are no closed timelines
+(you cannot travel backwards in time).</p>
+<p>The program solves the relativistic wave equation that in a general space takes the form</p>
+<div class="math notranslate nohighlight" id="dalambert">
+\[\square\Phi = 0\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\square\Phi = \frac{1}{\sqrt{-g}}\partial_{\mu}        \left( \sqrt{-gg^{\mu\nu}}\partial_{\nu}\Phi \right)\]</div>
+<p><span class="math notranslate nohighlight">\(\Phi\)</span> is the gravitational field. We are going to solve the relativistic
+wave equation in 1-spatial dimension, so <span class="math notranslate nohighlight">\(\Phi = \Phi(t,x)\)</span></p>
+<p>Let’s now take a look <em>inside</em> the program. It runs in FORTRAN90(.f90). It is
+structured in several nested routines using only 2 Fortran modules:
+“arrays.f90” and “global.f90”. It contains the following scripts:</p>
+<div class="section" id="modules">
+<h2>2.3.1. Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><strong>arrays.f90</strong>: Defines some global variables and dimensional arrangements.</p>
+<p><strong>global.f90</strong>: declares scalar variables that are used in all program
+routines.</p>
+</div></blockquote>
+</div>
+<div class="section" id="subroutines">
+<h2>2.3.2. <strong>Subroutines</strong><a class="headerlink" href="#subroutines" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><strong>main.f90</strong>: it is the “traditional” first file. Starts the program and
+manages the parameters and variables. Use “global.f90” module.</p>
+<p><strong>principal.f90</strong>: the “core” of the program. Use “arrays.f90” and
+“global.f90”, call secundaries subroutines (like memory asignament), and
+checks and saves the progress.</p>
+<p><strong>memory.f90</strong>: memory assignment for numerical variables. It uses
+“arrays.f90” and “global.f90”. This subroutine is necessary for the
+compilation, but it is not important for the numerical calculation (it only
+assigns space of memory to the allocated variables)</p>
+<p><strong>mesh.f90</strong>: this subroutine generates the division of the space and the
+temporal coordinates, and defines the minimum units of separation to
+discretize space and time. Uses “arrays.f90” and “global.f90”</p>
+<p><strong>initial.f90</strong>: calculates the parameters of the adapted coordinates
+according to the defined metric in the spacetime we intended to simulate.
+In this case, only <em>Minkowski</em> and <em>Schwarzschild</em> metrics are implemented,
+so this subroutine needs only to know the parameters of the Schwarzschild
+metric. It defines the pulse of the wave (in this case, Gaussian pulse) and
+then calls “constriction_calc.f90” to solve the constriction equations
+(energy and momentum). Uses “arrays.f90” and “global.f90”.</p>
+<p><strong>constriction_calc.f90</strong>: solves the constriction equations for the
+initial parameters using the <em>finite differences</em> method, calculating the
+central difference and then the forward and backward differences. Uses
+“arrays.f90” and “global.f90”.</p>
+<p><strong>save_arrays.f90</strong>: this subroutine is not really important, it only saves
+the results in “.x” extesion files, using a couple of tuples <span class="math notranslate nohighlight">\((x,
+\Phi(x))\)</span> for each timestep (it doesn’t save all time iterations, only
+under several conditions). Uses “arrays.f90” and “global.f90”.</p>
+<p><strong>RangKut3.f90</strong>: This is the core of the numerical calculation.
+Previously, we need the values of <span class="math notranslate nohighlight">\(\Phi(x)\)</span> in each point, calling
+“numeric.f90”. It Solves the evolution equations using the <em>Range-Kuta</em>
+method. A third RK order is enough to guarantee the convergence of the
+method. We need to re-solve the constriction in each iteration. Also,
+this subroutine calls “boundaries_calc.f90”. Uses “arrays.f90” and
+“global.f90”.</p>
+<p><strong>numeric.f90</strong>: Calculates the evolution of the fields using <em>second order
+finite differences</em> method. Similar to “constriction_calc*. Uses
+“arrays.f90” and “global.f90”.</p>
+<p><strong>boundaries.f90</strong>: implemented the boundary conditions. Absorption,
+reflexion, periodic and black hole conditions. It is possible that we need
+to improve this subroutine.</p>
+</div></blockquote>
+</div>
+<div class="section" id="installation-guide">
+<h2>2.3.3. <strong>Installation guide</strong><a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h2>
+<p>For the moment, we will include just the instructions for based Linux SO.</p>
+<ol class="arabic">
+<li><p class="first">Install the libraries of FORTRAN90:</p>
+</li>
+<li><p class="first">Install a Fortran compiler:</p>
+<blockquote>
+<div><p><strong>Archlinux</strong>: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">gfortran</span></code></p>
+<p><strong>Debian/Ubuntu</strong>: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">gfortran</span></code></p>
+<p><strong>Fedora</strong>: <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-c</span> <span class="pre">dnf</span> <span class="pre">install</span> <span class="pre">fcc-gfortran</span></code></p>
+</div></blockquote>
+</li>
+<li><p class="first">To compile the code, use the <em>Makefile</em> file. Once located at the directory
+where the <em>Makefile</em> is, type <em>make</em> on the terminal (maybe you have to install
+the <em>make</em> command first). To compile the code manually you need to introduce</p>
+</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gfortran -std<span class="o">=</span>f95 file1.f90 file2.f90 <span class="o">(</span>...<span class="o">)</span> fileN.f90 -o executable_name.
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>In order to visualize the graphics, you can use <em>gnuplot</em> ore similar.</li>
+</ol>
+<p>We recommend using the app included in our repository to execute and visualize all
+the results.</p>
+</div>
+</div>
 
 
            </div>
@@ -393,8 +501,6 @@ performance. This file is also implemented in the widget.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="notes.html" class="btn btn-neutral float-right" title="2.3. NOTAS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="2. Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

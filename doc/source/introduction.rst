@@ -1,7 +1,7 @@
 .. _introduction:
 
 
-This documentation was written by Mario González and Diego Valledor in 2019.
+This documentation has been written by Mario González and Diego Valledor.
 The files referred in this document are stored in our Github repository_. 
 
 .. _repository: https://github.com/mariohyls/numericalRelativity
@@ -47,6 +47,11 @@ Those files, and their basic usage are:
 
     **plotGraphs.py**: It reads the data written by the Fortran scripts, splits
     it regarding to the timesteps and plots it making a simple animation.
+
+    A set of **fortran files** that simulate a gravitational pulse in a
+    2-dimensional simplified space-time. This tool aims to perform a numerical
+    calculation of the intensity of the field induced by a 1-dimensional
+    gravitational wave using the *3+1 formulism* of the General Relativity. 
 
 In the following sections, we will cover the basic usage of these files, also
 providing some examples and discussing some computational issues.

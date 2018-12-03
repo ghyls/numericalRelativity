@@ -211,7 +211,7 @@ The basic options are:
     ``dt``: the timestep. This variable is quite important, and is directly
     related to the accuracy of the code.
 
-    In some cases, especially when isung the Schwarzschild potential, one has to
+    In some cases, especially when using the Schwarzschild potential, one has to
     take care of this variable, in order to prevent situations like the one 
     in the following figure:
 
@@ -282,4 +282,133 @@ performance. This file is also implemented in the widget.
 
    a Screenshot of the simulation.
 
+===================================================================
+A gravitational pulse in a 2-dimensional simplified space-time(t,x)
+===================================================================
 
+The program "gravitational-wave" aims to perform a numerical calculation of the
+intensity of the field induced by a 1-dimensional gravitational wave using the
+*3+1 formalism* of the General Relativity. 
+
+The *3+1 formalism* is based on the decomposition of space-time into
+3-dimensional hyper-surfaces with *t = constant*. This can be seen as a
+foliation, we can superimpose infinite hyper-planes (3-dimensional) to generate
+a complete 4-dimensional space. It is only necessary that the *leaves* do not
+intersect each other. A space that meets this condition is said to be a
+*globally hyperbolic space*, and implies that there are no closed timelines
+(you cannot travel backwards in time). 
+
+The program solves the relativistic wave equation that in a general space takes the form 
+
+.. _dalambert:
+.. math::
+
+    \square\Phi = 0
+
+where
+
+.. RelWave:
+.. math::
+
+    \square\Phi = \frac{1}{\sqrt{-g}}\partial_{\mu}        \left( \sqrt{-gg^{\mu\nu}}\partial_{\nu}\Phi \right)
+
+:math:`\Phi` is the gravitational field. We are going to solve the relativistic
+wave equation in 1-spatial dimension, so :math:`\Phi = \Phi(t,x)`
+
+
+Let's now take a look *inside* the program. It runs in FORTRAN90(.f90). It is
+structured in several nested routines using only 2 Fortran modules:
+"arrays.f90" and "global.f90". It contains the following scripts:
+
+-------
+Modules
+-------
+
+    **arrays.f90**: Defines some global variables and dimensional arrangements.
+
+    **global.f90**: declares scalar variables that are used in all program
+    routines.
+
+---------------
+**Subroutines**
+---------------
+
+    **main.f90**: it is the "traditional" first file. Starts the program and
+    manages the parameters and variables. Use "global.f90" module.
+
+    **principal.f90**: the "core" of the program. Use "arrays.f90" and
+    "global.f90", call secundaries subroutines (like memory asignament), and
+    checks and saves the progress.
+
+    **memory.f90**: memory assignment for numerical variables. It uses
+    "arrays.f90" and "global.f90". This subroutine is necessary for the
+    compilation, but it is not important for the numerical calculation (it only
+    assigns space of memory to the allocated variables)
+
+    **mesh.f90**: this subroutine generates the division of the space and the
+    temporal coordinates, and defines the minimum units of separation to
+    discretize space and time. Uses "arrays.f90" and "global.f90"
+
+    **initial.f90**: calculates the parameters of the adapted coordinates
+    according to the defined metric in the spacetime we intended to simulate.
+    In this case, only *Minkowski* and *Schwarzschild* metrics are implemented,
+    so this subroutine needs only to know the parameters of the Schwarzschild
+    metric. It defines the pulse of the wave (in this case, Gaussian pulse) and
+    then calls "constriction_calc.f90" to solve the constriction equations
+    (energy and momentum). Uses "arrays.f90" and "global.f90".
+
+    **constriction_calc.f90**: solves the constriction equations for the
+    initial parameters using the *finite differences* method, calculating the
+    central difference and then the forward and backward differences. Uses
+    "arrays.f90" and "global.f90".
+
+    **save_arrays.f90**: this subroutine is not really important, it only saves
+    the results in ".x" extesion files, using a couple of tuples :math:`(x,
+    \Phi(x))` for each timestep (it doesn't save all time iterations, only
+    under several conditions). Uses "arrays.f90" and "global.f90".
+
+    **RangKut3.f90**: This is the core of the numerical calculation.
+    Previously, we need the values of :math:`\Phi(x)` in each point, calling
+    "numeric.f90". It Solves the evolution equations using the *Range-Kuta*
+    method. A third RK order is enough to guarantee the convergence of the
+    method. We need to re-solve the constriction in each iteration. Also,
+    this subroutine calls "boundaries_calc.f90". Uses "arrays.f90" and
+    "global.f90".
+
+    **numeric.f90**: Calculates the evolution of the fields using *second order
+    finite differences* method. Similar to "constriction_calc*. Uses
+    "arrays.f90" and "global.f90".
+
+    **boundaries.f90**: implemented the boundary conditions. Absorption,
+    reflexion, periodic and black hole conditions. It is possible that we need
+    to improve this subroutine.
+
+----------------------
+**Installation guide**
+----------------------
+
+For the moment, we will include just the instructions for based Linux SO.
+
+1.  Install the libraries of FORTRAN90: 
+
+2.  Install a Fortran compiler:
+
+        **Archlinux**: ``sudo pacman -S gfortran`` 
+
+        **Debian/Ubuntu**: ``sudo apt-get install gfortran``
+
+        **Fedora**: ``su -c dnf install fcc-gfortran``
+
+3.  To compile the code, use the *Makefile* file. Once located at the directory
+    where the *Makefile* is, type *make* on the terminal (maybe you have to install
+    the *make* command first). To compile the code manually you need to introduce
+
+.. code-block:: bash
+
+    gfortran -std=f95 file1.f90 file2.f90 (...) fileN.f90 -o executable_name. 
+
+4.  In order to visualize the graphics, you can use *gnuplot* ore similar.
+
+
+We recommend using the app included in our repository to execute and visualize all
+the results.

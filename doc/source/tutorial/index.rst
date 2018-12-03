@@ -8,4 +8,3 @@
    :maxdepth: 2
 
    theTutorial.rst
-   notes.rst
