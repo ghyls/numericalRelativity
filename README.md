@@ -1,8 +1,6 @@
 
 This documentation has been written by Mario González and Diego Valledor.
-The files referred in this document are stored in our Github repository_. 
-
-.. _repository: https://github.com/mariohyls/numericalRelativity
+The files referred in this document are stored in our Github repository https://github.com/mariohyls/numericalRelativity
 
 
 
