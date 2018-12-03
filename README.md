@@ -1,5 +1,3 @@
-.. _introduction:
-
 
 This documentation has been written by Mario González and Diego Valledor.
 The files referred in this document are stored in our Github repository_. 
@@ -8,7 +6,7 @@ The files referred in this document are stored in our Github repository_.
 
 
 
-==========================
+
 Numerical Relativity Tools
 ==========================
 
