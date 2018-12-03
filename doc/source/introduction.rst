@@ -8,9 +8,9 @@ The files referred in this document are stored in our Github repository_.
 
 
 
-====================
-Numerical Relativity
-====================
+==========================
+Numerical Relativity Tools
+==========================
 
 
 On this guide, we will cover the basic usage of every tool we have created.
