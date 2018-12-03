@@ -19,7 +19,7 @@ from pyqtgraph import ScatterPlotItem
 
 class PlotGraphs(pg.GraphicsWindow):
 
-    dataFile = "Phi_2.x"
+    dataFile = "Psi_2.x"
     imagenes = []
     limits = []
 
@@ -66,16 +66,16 @@ class PlotGraphs(pg.GraphicsWindow):
         self.setLayout(self.mainLayout)
 
         self.timer = QtCore.QTimer(self)
-        self.timer.setInterval(200) # in milliseconds
+        self.timer.setInterval(50) # in milliseconds
         self.timer.start()
         self.timer.timeout.connect(self.onNewData)
 
-        self.plotItem = self.addPlot(title="Gravitational Wave 1D simulator")
+        self.plotItem = self.addPlot(title="Gravitational Wave 1 + 1 simulator")
 
         self.plotItem.setXRange(xmin, xmax)
         self.plotItem.setYRange(ymin, ymax)
 
-        self.plotDataItem = self.plotItem.plot([], pen=pg.mkPen('c', width=5))
+        self.plotDataItem = self.plotItem.plot([], pen=pg.mkPen('c', width=3))
         #self.scatter = self.plotItem.plot(size=10, pen=None, symbolBrush=(255,0,0), symbolSize=5, symbolPen=None)  #brush=pg.mkBrush(255, 255, 255, 120
 
     def setData(self, x, y):
@@ -91,8 +91,9 @@ class PlotGraphs(pg.GraphicsWindow):
             self.ind += 1
             self.setData(allX, allY)
         except Exception as e: 
+            self.ind = 0
             print(e)
-            self.timer.stop()
+            #self.timer.stop()
 
 
 def main():
