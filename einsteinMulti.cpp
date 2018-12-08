@@ -5,24 +5,22 @@
 #include <cmath>
 #include <time.h>
 
-// useful constants
+// useful parameters and constants
 const float G = 1;
-const float dt = 0.0001;
-const float tmax = 10;
+const float dt = 0.00001;
+const float tmax = 1;
 const float t0 = 0;
-const int nObj = 2000;
+const int nObj = 200;
 
 const bool relat = false;
 const bool loop = false;
 
 
-//nObj  150
-
-
-
 float computeDistance(double x1, double y1, double x2, double y2)
 {
+
     float d = pow((y2-y1)*(y2-y1) + (x2-x1)*(x2-x1), 0.5);
+
     return(d);
 }
 
@@ -33,9 +31,7 @@ void updateCoord(std::array<float, nObj> &rMin, std::array<float, nObj> &allM,
                 std::array<double, nObj> &allY, std::array<float, nObj> &allVx,
                 std::array<float, nObj> &allVy)
 {
-    //for (int i = 0; i<nObj+2; i++){
-    //    std::cout << rMin[i] << std::endl;
-    //}
+    
     for (int i = 0; i<nObj; i++){
         rMin[i] = pow(allM[i],0.3)/15;     
     }
@@ -54,20 +50,22 @@ void updateCoord(std::array<float, nObj> &rMin, std::array<float, nObj> &allM,
                     float Mj = allM[j];
                     std::cout << "==============================" << std::endl;
                     std::cout << "boom!, " << i << ' ' << j << std::endl;
-                    //std::cout << allX[i] << ' ' << allY[i] << std::endl;
-                    //std::cout << allX[j] << ' ' << allY[j] << std::endl;
+                    
+
+                    // update everything
 
                     allVx[i] = (Mi*allVx[i] + Mj*allVx[j])/(Mi + Mj);
                     allVy[i] = (Mi*allVy[i] + Mj*allVy[j])/(Mi + Mj);
                     allX[i] = (Mi*allX[i] + Mj*allX[j])/(Mi + Mj);
                     allY[i] = (Mi*allY[i] + Mj*allY[j])/(Mi + Mj);
-                    allM[i] += allM[j];
+                    allM[i] += Mj;
 
                     status[j] = false;
                
                 }
                 if(relat==false)
                 {
+                    
                     float F = G * allM[i] * allM[j] / (r*r);
                     float Fx = F * (allX[j]-allX[i]) / r;
                     float Fy = F * (allY[j]-allY[i]) / r;
@@ -85,15 +83,14 @@ void updateCoord(std::array<float, nObj> &rMin, std::array<float, nObj> &allM,
 
                 else if (relat==true)
                 {
-                    //se estidua la órbita de j
+                    //we will focus on the orbit of 'j'
                 
                     float alpha = atan((allY[j]-allY[i])/(allX[j]-allX[i]));
                     float beta = atan(allVy[j]/allVx[j]);
 
                     float L = allM[j] * r * pow(allVx[j]*allVx[j] + allVy[j]*allVy[j], 0.5) * sin(beta-alpha);
-                    //float L = 1;
-                    //if (L>10e3)
-                    //std::cout << "v vale " << allVx[j] <<' '<< r << std::endl;
+
+                    //std::cout << "v is " << allVx[j] <<' '<< r << std::endl;
                     
                     float F = +3*G*L*L*allM[i]/(allM[j]*pow(r, 4)) + G*allM[j]*allM[i]/(r*r) - L*L/pow(r, 3);
                     float Fx = F * (allX[j]-allX[i]) / r;
@@ -146,7 +143,7 @@ int main()
     std::array<float, nObj> allM;
     std::array<bool, nObj> status;
 
-    //fill with initial random values
+    //fill them with initial random values
     for (int i = 0; i < nObj; i++){
         allX[i] = (double) rand()/RAND_MAX * 20 - 10;
         allY[i] = (double) rand()/RAND_MAX * 20 - 10;
@@ -154,17 +151,16 @@ int main()
         allVx[i] = (double) rand()/RAND_MAX - 0.5;
         allVy[i] = (double) rand()/RAND_MAX - 0.5;
 
-        //orbital conditions
+        //just for the visualization
         float scale=10;
 
-        //allVx[i] = (double) -allY[i]/scale;
-        //allVy[i] = (double) allX[i]/scale;
-
-        //allM[i] = (double) rand()/RAND_MAX * 20;
+        //allM[i] = (double) rand()/RAND_MAX * 20; //random mass
         allM[i] = 3;
         
         status[i] = true;
     }
+
+    // central attractor:
 
     //allX[0] = 0;
     //allY[0] = 0;
@@ -174,12 +170,8 @@ int main()
 
 
 
-    // main loop
     std::ofstream file;
-    file.open("temp.txt");
-    //c -> central particle
-    //l -> boundary restrictions
-    
+    file.open("temp.txt"); // output File!    
 
     std::array<double, nObj> xFinalTemp;
     std::array<double, nObj> yFinalTemp;
@@ -188,8 +180,6 @@ int main()
     float t = t0;
     while (t <= tmax)
     {
-        //std::cout << "good1" << std::endl;
-
         updateCoord(rMin, allM, status, allX, allY, allVx, allVy);
         
         file << t << ' ';
@@ -199,7 +189,6 @@ int main()
             if (allX[i] != xFinalTemp[i] && allY[i] != yFinalTemp[i])
             {
                 somethingRemains = true;
-                //std::cout << xFinalTemp[i] << ' ' << allX[i] << std::endl;
                 xFinalTemp[i] = allX[i];
                 yFinalTemp[i] = allY[i];
 
@@ -210,9 +199,10 @@ int main()
         if (somethingRemains == false) break;
         file << '\n';
 
-
         t += dt;
     }
+
+    //just for fun
     printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
 
     file.close();
