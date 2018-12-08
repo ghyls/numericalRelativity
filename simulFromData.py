@@ -20,17 +20,18 @@ from pyqtgraph import ScatterPlotItem
 class MyWidget(pg.GraphicsWindow):
     
     ind = 0 
-    dataFile = "temp.txt"
+    dataFile = ""
     def readTimeStep(self, index):
         with open(self.dataFile, "r") as f:
             line = next(islice(f, index, index+1))
         return line.split()
     
-    def __init__(self, parent=None):
+    def __init__(self, dataf, parent=None):
+
+        self.dataFile = dataf
+        super().__init__(parent=parent)
         
         self.lineLen = len(self.readTimeStep(0))
-        
-        super().__init__(parent=parent)
 
         self.mainLayout = QtWidgets.QVBoxLayout()
         self.setLayout(self.mainLayout)
@@ -82,7 +83,7 @@ def main():
 
     pg.setConfigOptions(antialias=False) # True seems to work as well
 
-    win = MyWidget()
+    win = MyWidget("temp.txt")
     win.show()
     win.resize(800,600) 
     win.raise_()
