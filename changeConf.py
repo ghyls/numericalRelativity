@@ -2,13 +2,13 @@ def changeConf(xmin=2., xmax=16., resolution=2, Nxx=1000, Ntt=20000, \
     every_scalar_t=10, every_aaray_t=100, \
     amplitude=0.1, sigma=1, x0=9., Boundaries=0, Metric=1):
 
-    DEFAULT_xmin=2.
-    DEFAULT_xmax=16.
+    DEFAULT_xmin=6.
+    DEFAULT_xmax=25.
     DEFAULT_resolution=2
     DEFAULT_Nxx=1000
-    DEFAULT_Ntt=20000
-    DEFAULT_amplitude=0.1
-    DEFAULT_x0=9.
+    DEFAULT_Ntt=25000
+    DEFAULT_amplitude=0.001
+    DEFAULT_x0=15.5
     DEFAULT_Boundaries=0
     DEFAULT_Metric=1
     
