@@ -11,9 +11,11 @@ def riemman(ds, g_mn, abcd):
 
 
     orden = []
+    lenDS = 0
     for i, e in enumerate(ds):
         #str -> sym
         if e != '': 
+            lenDS += 1
             exec("var"+str(i)+"=sp.symbols('"+e+"')")
             exec("orden.append(var"+str(i)+")")
 
@@ -25,7 +27,7 @@ def riemman(ds, g_mn, abcd):
     # R^a_{bcd} tiene cuatro términos. Para cada término,
     ABC.append([abcd[3],  abcd[1],  abcd[0]])   #t1
     ABC.append([abcd[2],  abcd[1],  abcd[0]])   #t2
-    for i in range(len(ds)):
+    for i in range(lenDS):
         ABC += [[abcd[2], ds[i], abcd[0]], [abcd[3], abcd[1], ds[i]]]    #t3
         ABC += [[abcd[3], ds[i], abcd[0]], [abcd[2], abcd[1], ds[i]]]    #t4
 
