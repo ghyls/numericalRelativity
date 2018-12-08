@@ -17,8 +17,8 @@ MRelR = np.array([MRelX[0], MRelY[0]]) #pos. inicial de M
 MRelV = np.array([vMR0, 0]) #vel.inicial de M
 
 #creeamos una version no relativista:
-Mx = [0]
-My = [rMR0]
+Mx = [rMR0]
+My = [0]
 Mr = np.array([MRelX[0], MRelY[0]]) #pos. inicial de M
 Mv = np.array([vMR0, 0]) #vel.inicial de M
 
@@ -55,12 +55,12 @@ def updateCoord(Rold, Vold, alpha=0, beta=0):
 
 
 t = 0.0
-alpha = 5e6
-beta = 0
+alpha = 0
+beta = 3e5
 distPrev = 0
 dist = 0
 r0 = dt * 10
-while t < 2*TMR:
+while t < TMR*200:
 
     MRelR, MRelV = updateCoord(MRelR,  MRelV , alpha, beta)
     Mr, Mv = updateCoord(Mr,  Mv)
@@ -81,12 +81,12 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 
 
-col = np.linspace(0, 1, num=len(MRelX))
+col = np.linspace(-1, 1, num=len(MRelX))
 print(len(col))
-#plt.plot(MRelX, MRelY, '.', markersize = 1, c=MRelY)
-plt.scatter(MRelX, MRelY, c=col, s=2)
+#plt.plot(MRelX, MRelY, '-', markersize = 1)
+plt.scatter(MRelX, MRelY, c=col, s=3)
 
 #plt.plot(Mx, My, '.', markersize = 1)
 plt.axis("equal")
-plt.scatter(Sx[0], Sy[0])
+plt.scatter(Sx[0], Sy[0], s = 10)
 plt.show()
