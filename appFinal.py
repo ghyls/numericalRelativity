@@ -448,15 +448,15 @@ class Ui_TabWidget(object):
     def retranslateUi(self, TabWidget):
         _translate = QtCore.QCoreApplication.translate
         TabWidget.setWindowTitle(_translate("TabWidget", "Numerical Relativity TOOLS"))
-        self.label_11.setText(_translate("TabWidget", "Copyright (c) 2018 Diego Valledor & Mario González, MIT License "))
+        self.label_11.setText(_translate("TabWidget", "Copyright (c) 2018 Diego Valledor & Mario González, released under the MIT License "))
         self.ds1.setText(_translate("TabWidget", "t"))
         self.ds2.setText(_translate("TabWidget", "r"))
         self.ds3.setText(_translate("TabWidget", "th"))
         self.ds4.setText(_translate("TabWidget", "fi"))
         self.label_2.setText(_translate("TabWidget", "Order of the variables in the interval:"))
         self.label_5.setText(_translate("TabWidget", "Note: You can use the following symbolic constants: G, M, R, C1, C2, C3"))
-        self.label_4.setText(_translate("TabWidget", "Note: leave extra dimensions in blank"))
-        self.label_3.setText(_translate("TabWidget", "Metric (start from the up-left corner):"))
+        self.label_4.setText(_translate("TabWidget", "Note: leave extra dimensions empty"))
+        self.label_3.setText(_translate("TabWidget", "Metric (start from the upper left corner):"))
         self.m33.setText(_translate("TabWidget", "r**2*sin(th)**2"))
         self.m00.setText(_translate("TabWidget", "-(1-2*G*M/r)"))
         self.m11.setText(_translate("TabWidget", "1/(1-2*G*M/r)"))
@@ -470,7 +470,6 @@ class Ui_TabWidget(object):
         self.label_6.setText(_translate("TabWidget", "Result:"))
         TabWidget.setTabText(TabWidget.indexOf(self.tab1), _translate("TabWidget", "Christoffel symbols"))
         self.label_9.setText(_translate("TabWidget", "Result:"))
-        self.label_10.setText(_translate("TabWidget", "resultado"))
         self.label_8.setText(_translate("TabWidget", "R"))
         self.rb.setText(_translate("TabWidget", "r"))
         self.ra.setText(_translate("TabWidget", "t"))
@@ -479,7 +478,7 @@ class Ui_TabWidget(object):
         self.calculateR.setText(_translate("TabWidget", "calculate"))
         TabWidget.setTabText(TabWidget.indexOf(self.tab_2), _translate("TabWidget", "Riemman tensor"))
         self.label_7.setText(_translate("TabWidget", "DataFile: "))
-        self.lineEdit.setText(_translate("TabWidget", "dataf1.txt"))
+        self.lineEdit.setText(_translate("TabWidget", "N150.txt"))
         self.pushButton_2.setText(_translate("TabWidget", "Start!"))
         TabWidget.setTabText(TabWidget.indexOf(self.tab_3), _translate("TabWidget", "TheUniverse"))
         self.pushButton_3.setText(_translate("TabWidget", "write changes"))
@@ -491,7 +490,7 @@ class Ui_TabWidget(object):
         self.label_16.setText(_translate("TabWidget", "number of timesteps"))
         self.label_17.setText(_translate("TabWidget", "amplitude"))
         self.label_18.setText(_translate("TabWidget", "sigma"))
-        self.temp_res.setText(_translate("TabWidget", "20000"))
+        self.temp_res.setText(_translate("TabWidget", "25000"))
         self.sigma.setText(_translate("TabWidget", "1"))
         self.label_20.setText(_translate("TabWidget", "x0"))
         self.label_22.setText(_translate("TabWidget", "boundaries"))
@@ -527,8 +526,9 @@ class Ui_TabWidget(object):
         self.label_10.setText(result)
 
     def startSimulation (self):
-        self.asd = MyWidget()
-        self.asd.dataFile = self.lineEdit.text()
+        #MyWidget().dataFile = self.lineEdit.text()
+        
+        self.asd = MyWidget(self.lineEdit.text())
 
     def writeStuff (self):
         print("Hello!")
@@ -550,7 +550,7 @@ class Ui_TabWidget(object):
             os.system("./onda")
             print("execution is done!")
             self.zxc = PlotGraphs()
-            self.zxc.dataFile = "Phi_2.x"
+            self.zxc.dataFile = "Psi_2.x"
         except:
             print("oops :P")
 
