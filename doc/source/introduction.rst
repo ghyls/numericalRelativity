@@ -51,7 +51,7 @@ Those files, and their basic usage are:
     A set of **fortran files** that simulate a gravitational pulse in a
     2-dimensional simplified space-time. This tool aims to perform a numerical
     calculation of the intensity of the field induced by a 1-dimensional
-    gravitational wave using the *3+1 formulism* of the General Relativity. 
+    gravitational wave using the *3+1 formalism* of the General Relativity. 
 
 In the following sections, we will cover the basic usage of these files, also
 providing some examples and discussing some computational issues.

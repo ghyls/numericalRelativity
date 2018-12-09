@@ -85,7 +85,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Numerical Relativity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Numerical Relativity Tools</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">2. Tutorials</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Inside the interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-inputs-tab">2.1.1. The <em>Inputs</em> tab</a></li>
@@ -268,6 +268,63 @@ einsteinMulti.cpp. Just choose the text file produced by the script and press
 </div>
 <div class="section" id="gw-1d-tab">
 <h2>2.1.5. <em>GW 1D</em> tab<a class="headerlink" href="#gw-1d-tab" title="Permalink to this headline">¶</a></h2>
+<p>This tab will plot an animation of a one-dimensional gravitational pulse.</p>
+<p>It uses the executable produced by the Fortran code, in order to calculate each
+timestep, and to create with all of them a <strong>datafile</strong> that will be eventually
+read and animated by Python’s module <em>pyqtgraph</em>.</p>
+<p>When you press <span class="guilabel">write changes</span>, all the parameters will be
+written form the fields above to a txt file containing all the information.</p>
+<p><em>sigma</em> refers to the <em>gaussian sigma</em> and <em>x0</em> is the point from where the
+pulse is emitted.</p>
+<p>the default values for all the blanks are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="64%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">blank</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>x min</td>
+<td>6.0</td>
+</tr>
+<tr class="row-odd"><td>x max</td>
+<td>25.0</td>
+</tr>
+<tr class="row-even"><td>spatial resolution</td>
+<td>1000</td>
+</tr>
+<tr class="row-odd"><td>number of timesteps</td>
+<td>25000</td>
+</tr>
+<tr class="row-even"><td>amplitude</td>
+<td>0.001</td>
+</tr>
+<tr class="row-odd"><td>sigma</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>x0</td>
+<td>15.5</td>
+</tr>
+<tr class="row-odd"><td>boundaries</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>metric</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Once everything is written, pres <span class="guilabel">run</span> and the Fortran executable
+will do the rest. If you ran the widget from the terminal, you will see the
+progress on the terminal. If not, just be patient, it may not take more than 6
+seconds with de default values.</p>
+<div class="figure align-center" id="id4">
+<img alt="This is the 1D gravitational wave tab" src="../_images/GW1D.png" />
+<p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">This is the 1D gravitational wave tab</span></p>
+</div>
 </div>
 </div>
 <div class="section" id="outside-the-interface">
@@ -338,11 +395,11 @@ related to the accuracy of the code.</p>
 take care of this variable, in order to prevent situations like the one
 in the following figure:</p>
 </div></blockquote>
-<div class="figure align-center" id="id4">
+<div class="figure align-center" id="id5">
 <span id="orbitmal"></span><img alt="an example of wrong timestep choice" src="../_images/orbitmal.png" />
-<p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">an example of wrong timestep choice</span></p>
+<p class="caption"><span class="caption-number">Fig. 2.5 </span><span class="caption-text">an example of wrong timestep choice</span></p>
 </div>
-<p>The result is shown in figure <a class="reference internal" href="#orbitmal"><span class="std std-numref">Fig. 2.4</span></a> example denotes wrong parameters
+<p>The result is shown in figure <a class="reference internal" href="#orbitmal"><span class="std std-numref">Fig. 2.5</span></a> example denotes wrong parameters
 in the code. At the beginning of the motion, the timestep is more than enough
 to describe the orbit precisely, but as the <em>planet</em> approaches the <em>sun</em>, the
 timestep becomes too big. In the closest point, the force is so strong that the
@@ -372,9 +429,9 @@ plot (simulating the orbit only 2 periods) only when we the effect is
 amplified by a factor of <span class="math notranslate nohighlight">\(10^6\)</span>. In fact, as Einstein predicted, the
 perihelium of Mercury rotates only 46’’ per turn, too small for being seen in
 our simulation.</p>
-<div class="figure align-center" id="id5">
+<div class="figure align-center" id="id6">
 <span id="mercury"></span><img alt="the precession of Mercury, exaggerating the effects of General Relativity." src="../_images/mercury.png" />
-<p class="caption"><span class="caption-number">Fig. 2.5 </span><span class="caption-text">the precession of Mercury, exaggerating the effects of General Relativity.</span></p>
+<p class="caption"><span class="caption-number">Fig. 2.6 </span><span class="caption-text">the precession of Mercury, exaggerating the effects of General Relativity.</span></p>
 </div>
 </div>
 <div class="section" id="simulfromdata-py">
@@ -383,9 +440,9 @@ our simulation.</p>
 show the animation. It is written in Python, but uses <code class="docutils literal notranslate"><span class="pre">pyqtgraph</span></code> instead of
 Matplotlib for showing the result. This choice was made for the sake of
 performance. This file is also implemented in the widget.</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id7">
 <span id="universe"></span><img alt="a Screenshot of the simulation." src="../_images/universe.png" />
-<p class="caption"><span class="caption-number">Fig. 2.6 </span><span class="caption-text">a Screenshot of the simulation.</span></p>
+<p class="caption"><span class="caption-number">Fig. 2.7 </span><span class="caption-text">a Screenshot of the simulation.</span></p>
 </div>
 </div>
 </div>

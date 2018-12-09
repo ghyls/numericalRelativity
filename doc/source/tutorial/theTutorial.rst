@@ -128,6 +128,57 @@ einsteinMulti.cpp. Just choose the text file produced by the script and press
 
 
 
+
+This tab will plot an animation of a one-dimensional gravitational pulse.
+
+It uses the executable produced by the Fortran code, in order to calculate each
+timestep, and to create with all of them a **datafile** that will be eventually
+read and animated by Python's module *pyqtgraph*.
+
+When you press :guilabel:`write changes`, all the parameters will be
+written form the fields above to a txt file containing all the information.
+
+*sigma* refers to the *gaussian sigma* and *x0* is the point from where the
+pulse is emitted.
+
+the default values for all the blanks are:
+
+
++---------------------+------------+
+| blank               | value      |      
++=====================+============+
+| x min               | 6.0        |
++---------------------+------------+
+| x max               | 25.0       |
++---------------------+------------+
+| spatial resolution  | 1000       |
++---------------------+------------+
+| number of timesteps | 25000      |
++---------------------+------------+
+| amplitude           | 0.001      |
++---------------------+------------+
+| sigma               | 1          |
++---------------------+------------+
+| x0                  | 15.5       |
++---------------------+------------+
+| boundaries          | 0          |
++---------------------+------------+
+| metric              | 1          |
++---------------------+------------+
+
+Once everything is written, pres :guilabel:`run` and the Fortran executable
+will do the rest. If you ran the widget from the terminal, you will see the
+progress on the terminal. If not, just be patient, it may not take more than 6
+seconds with de default values.
+
+
+.. gw1d:
+.. figure:: images/GW1D.png
+   :align: center
+   :alt: This is the 1D gravitational wave tab
+
+   This is the 1D gravitational wave tab
+
 =====================
 Outside the interface
 =====================

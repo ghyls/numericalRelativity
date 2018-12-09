@@ -1,6 +1,6 @@
 
 Numerical Relativity
-===================
+====================
 
 .. toctree::
    :maxdepth: 3
