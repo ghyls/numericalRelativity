@@ -495,9 +495,9 @@ class Ui_TabWidget(object):
         self.label_20.setText(_translate("TabWidget", "x0"))
         self.label_22.setText(_translate("TabWidget", "boundaries"))
         self.label_21.setText(_translate("TabWidget", "metric"))
-        self.label_23.setText(_translate("TabWidget", "Note: Boundaries can be either 0, 1, 2, 3."))
-        self.label_24.setText(_translate("TabWidget", "Note: metric can be 0 (Minkowski) or 1 (Schwarzschild)"))
-        self.label_25.setText(_translate("TabWidget", "Note: Default values will be used if a field is left blank"))
+        self.label_23.setText(_translate("TabWidget", "Note: Boundaries can be either 0, 1, 2, or 3."))
+        self.label_24.setText(_translate("TabWidget", "Note: 'metric' can be 0 (Minkowski) or 1 (Schwarzschild)"))
+        self.label_25.setText(_translate("TabWidget", "Note: Default values will be used if a blank is left empty"))
         TabWidget.setTabText(TabWidget.indexOf(self.tab_4), _translate("TabWidget", "GW 1D"))
 
 
