@@ -55,7 +55,7 @@ def riemman(ds, g_mn, abcd):
     
     
 
-'''
+
 abcd = ["t", "r", "t", "r"]
 ds = ['t', 'r', 'th', 'fi']
 g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
@@ -64,4 +64,4 @@ R = riemman(ds, g_mn, abcd)
 print(R)
 R.subs('t', 'th')
 print(R)
-'''
+

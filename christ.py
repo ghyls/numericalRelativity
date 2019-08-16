@@ -1,5 +1,6 @@
 import sympy as sp
 
+
 def christoffel(ds, g_mn, abc = [], ABC = []):
 
     # ds contiene el orden de las variables en el intervalo
@@ -56,6 +57,8 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
         for di in range(len(gabD)):
             chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ordenSt[ai]) + sp.diff(gabD[di][ai], ordenSt[bi]) - sp.diff(gabD[ai][bi], ordenSt[di]))
         
+        #sp.pprint(Integral(sqrt(1/x), x), use_unicode=False)
+
         return(chrst)
     
 
@@ -82,9 +85,10 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
     
 
 
-'''
-abc = ["r", "t", "t"]
+
+abc = ["fi", "r", "fi"]
 ds = ['t', 'r', 'th', 'fi']
 g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
-print(christoffel(ds, g_mn, abc))
-'''
+
+print("Γ")
+sp.pprint(christoffel(ds, g_mn, abc))
