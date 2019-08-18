@@ -32,6 +32,10 @@ def riemman(ds, g_mn, abcd):
         ABC += [[abcd[3], ds[i], abcd[0]], [abcd[2], abcd[1], ds[i]]]    #t4
 
     symbols = christoffel(ds, g_mn, ABC=ABC)
+
+    if type(symbols[0]) == str: return symbols # in case we dounf an error
+    else: symbols = symbols[0]
+
     
     # cada termino de la expresión de R:
     
@@ -51,7 +55,7 @@ def riemman(ds, g_mn, abcd):
     S = sp.simplify(r1 - r2 + r3 - r4)   #esto es R^a_{bcd}
 
 
-    return(S)
+    return([S])
     
     
 
@@ -60,8 +64,26 @@ abcd = ["t", "r", "t", "r"]
 ds = ['t', 'r', 'th', 'fi']
 g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
 
-R = riemman(ds, g_mn, abcd)
+R = riemman(ds, g_mn, abcd)[0]
 print(R)
 R.subs('t', 'th')
 print(R)
 
+
+
+
+'''
+a simple but powerful application for symbolic calculus on Numerical Relativity
+
+
+
+Riemman tensor
+Cristophel symbol
+symbolic calculator
+Metric Simple
+
+
+R T C S S C
+
+Simple S
+'''
