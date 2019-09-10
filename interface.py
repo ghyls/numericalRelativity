@@ -183,6 +183,14 @@ class Ui_TabWidget(object):
         self.label_4.setText("Note: leave extra dimensions empty")
         self.label_4.raise_()
 
+        # extra constants
+        self.label_4 = QtWidgets.QLabel(self.inputsTab)
+        self.label_4.setObjectName("label_4")
+        
+        self.tab0_grid_main.addWidget(self.label_4, 9, 0, 1, 3)
+        self.label_4.setText("Note: Fell free to use whichever other constant in the matrix")
+        self.label_4.raise_()
+
         # Metric
         self.label_3 = QtWidgets.QLabel(self.inputsTab)
         self.label_3.setObjectName("label_3")
@@ -491,7 +499,7 @@ class Ui_TabWidget(object):
         self.lab_status.setObjectName("lab_status")
         self.lab_status.setText("No errors so far!")
 
-        self.tab3_vbox_0.addWidget(self.lab_status)
+        self.tab3_vbox_0.addWidget(self.lab_status)                        
         # << << << lab_status
 
         # >> >> >> lab_log
@@ -594,7 +602,7 @@ class Ui_TabWidget(object):
         elif result[0] == "dimMismatch":
             self.handleErrors(self.label_10, "dimMismatch")
         elif result[0] == "unknownVar":
-            self.handleErrors(self.label_10, "dimMismatch", result[1])
+            self.handleErrors(self.label_10, "unknownVar", result[1])
         else:
             self.label_10.setText(str(result[0]))
             self.lab_status.setText("No errors so far!")
