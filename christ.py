@@ -103,9 +103,13 @@ def christoffel(ds, g_mn, abc = [], ABC = []):
             b = elem[1]
             c = elem[2]  
 
-            ai = ordenSt.index(a)
-            bi = ordenSt.index(b)
-            ci = ordenSt.index(c)
+            try: ai = ordenSt.index(a)
+            except: error = "unknownVar"; return([error, a])
+            try: bi = ordenSt.index(b)
+            except: error = "unknownVar"; return([error, b])
+            try: ci = ordenSt.index(c)
+            except: error = "unknownVar"; return([error, c])  
+
             chrst = 0
             for di in range(len(gabD)):
                 chrst += 1./2*gabU[ci][di]*(sp.diff(gabD[bi][di], ordenSt[ai]) + sp.diff(gabD[di][ai], ordenSt[bi]) - sp.diff(gabD[ai][bi], ordenSt[di]))
