@@ -3,10 +3,7 @@
 
 from christ import christoffel
 from riem import riemman
-from simulFromData import MyWidget
-from plotGraphs import PlotGraphs
-from changeConf import changeConf
-import os
+#import os
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -164,7 +161,7 @@ class Ui_TabWidget(object):
         self.label_11.setObjectName("label_11")
 
         self.tab0_grid_main.addWidget(self.label_11, 12, 2, 1, 1)
-        self.label_11.setText("Copyright (c) 2018 Diego Valledor & Mario González, released under the MIT License ")
+        self.label_11.setText("Copyright (c) 2019 Diego Valledor & Mario González, released under the MIT License ")
         self.label_11.raise_()
 
         # interval order
@@ -188,7 +185,8 @@ class Ui_TabWidget(object):
         self.label_4.setObjectName("label_4")
         
         self.tab0_grid_main.addWidget(self.label_4, 9, 0, 1, 3)
-        self.label_4.setText("Note: Fell free to use whichever other constant in the matrix")
+        self.label_4.setText("Note: Unknown symbols are treated as constants in the above matrix,\n"
+                             "            Feel free to use as many as you want.")
         self.label_4.raise_()
 
         # Metric
@@ -497,7 +495,7 @@ class Ui_TabWidget(object):
         self.lab_status = QtWidgets.QLabel(self.tab_3) 
         self.lab_status.setFont(self.font_0)
         self.lab_status.setObjectName("lab_status")
-        self.lab_status.setText("No errors so far!")
+        self.lab_status.setText("No errors so far :D")
 
         self.tab3_vbox_0.addWidget(self.lab_status)                        
         # << << << lab_status
@@ -511,17 +509,19 @@ class Ui_TabWidget(object):
         self.tab3_vbox_0.addWidget(self.lab_errMsg)
         # << << << lab_log
 
-
         self.tab3_grid_main.addLayout(self.tab3_vbox_0, 2, 0, 1, 1)
         # << << tab3_vbox_0
+
+
+        # Err Tab <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     def handleErrors(self, target, subject, args = []):
 
         if subject == "syntaxError": 
             errMsg = "We have detected a syntax error in the element [" + str(args[0]) + \
-            ", " + str(args[1]) + "] of the\n Input Matrix (first tab).\n " \
-            "Remember to use proper python syntax, and that the only available\n symbolic constants " \
-            "are the ones stated under the matrix.\n\n" \
+            ", " + str(args[1]) + "] of the\nInput Matrix (first tab).\n" \
+            "Remember to use proper python syntax!\n\n" \
             "If you need further help or you think you have found a bug,\n please sumbit the issue " \
             "to the devs on GITHUB_LINK."
             
@@ -542,7 +542,7 @@ class Ui_TabWidget(object):
             self.lab_errMsg.setText(errMsg)
 
         elif subject == "dimMismatch":
-            errMsg = "You have entered a number of variables that does not match the\n " \
+            errMsg = "You have entered a number of variables that does not match the\n" \
             "dimension of your metric. Please fix this :)"
 
             target.setText("error! (see the logs)")
