@@ -1,4 +1,4 @@
-import sympy as sp
+from sympy import diff, simplify
 from christ import christoffel
 
 
@@ -39,8 +39,8 @@ def riemman(ds, g_mn, abcd):
     
     # cada termino de la expresión de R:
     
-    r1 = sp.diff(symbols[0], abcd[2])
-    r2 = sp.diff(symbols[1], abcd[3])
+    r1 = diff(symbols[0], abcd[2])
+    r2 = diff(symbols[1], abcd[3])
     r3 = r4 = 0
 
     i = 2   #rellenamos r3 y r4    
@@ -52,7 +52,7 @@ def riemman(ds, g_mn, abcd):
         
 
 
-    S = sp.simplify(r1 - r2 + r3 - r4)   #esto es R^a_{bcd}
+    S = simplify(r1 - r2 + r3 - r4)   #esto es R^a_{bcd}
 
 
     return([S])
@@ -60,14 +60,14 @@ def riemman(ds, g_mn, abcd):
     
 
 
-abcd = ["t", "r", "t", "r"]
-ds = ['t', 'r', 'th', 'fi']
-g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
-
-R = riemman(ds, g_mn, abcd)[0]
-print(R)
-R.subs('t', 'th')
-print(R)
+#abcd = ["t", "r", "t", "r"]
+#ds = ['t', 'r', 'th', 'fi']
+#g_mn = [['-(1-2*G*M/r)', '', '', ''], ['', '1/(1-2*G*M/r)', '', ''], ['', '', 'r**2', ''], ['', '', '', 'r**2*sin(th)**2']]
+#
+#R = riemman(ds, g_mn, abcd)[0]
+#print(R)
+#R.subs('t', 'th')
+#print(R)
 
 
 
